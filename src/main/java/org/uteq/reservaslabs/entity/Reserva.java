@@ -24,12 +24,11 @@ public class Reserva {
     @Column(nullable = false, length = 30)
     private String estado; // Activa / Cancelada
 
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "laboratorio_id", nullable = false)
     private Laboratorio laboratorio;
 

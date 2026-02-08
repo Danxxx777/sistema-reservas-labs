@@ -1,0 +1,83 @@
+<ui:composition template="/faces/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core">
+
+    <ui:define name="contenido">
+
+        <h2>Reservas de Laboratorios</h2>
+
+        <!-- FORMULARIO -->
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5">
+
+                <h:outputLabel value="Usuario:" />
+                <h:selectOneMenu value="#{reservaBean.reserva.usuario}"
+                                 converter="usuarioConverter"
+                                 required="true">
+                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
+                    <f:selectItems value="#{reservaBean.usuarios}"
+                                   var="u"
+                                   itemValue="#{u}"
+                                   itemLabel="#{u.nombres}" />
+                </h:selectOneMenu>
+
+                <h:outputLabel value="Laboratorio:" />
+                <h:selectOneMenu value="#{reservaBean.reserva.laboratorio}"
+                                 converter="laboratorioConverter"
+                                 required="true">
+                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
+                    <f:selectItems value="#{reservaBean.laboratorios}"
+                                   var="l"
+                                   itemValue="#{l}"
+                                   itemLabel="#{l.nombre}" />
+                </h:selectOneMenu>
+
+                <h:outputLabel value="Hora Inicio:" />
+                <h:inputText value="#{reservaBean.reserva.horaInicio}" />
+
+                <h:outputLabel value="Hora Fin:" />
+                <h:inputText value="#{reservaBean.reserva.horaFin}" />
+
+                <h:commandButton value="Reservar"
+                                 action="#{reservaBean.guardar}" />
+            </h:panelGrid>
+        </h:form>
+
+        <br/>
+
+        <!-- TABLA -->
+        <h:dataTable value="#{reservaBean.reservas}" var="r" border="1" cellpadding="5">
+
+            <h:column>
+                <f:facet name="header">Usuario</f:facet>
+                #{r.usuario.nombres}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Laboratorio</f:facet>
+                #{r.laboratorio.nombre}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Fecha</f:facet>
+                #{r.fecha}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Estado</f:facet>
+                #{r.estado}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton value="Cancelar"
+                                 action="#{reservaBean.cancelar(r.id)}"
+                                 rendered="#{r.estado eq 'Activa'}"/>
+            </h:column>
+
+        </h:dataTable>
+
+    </ui:define>
+</ui:composition>

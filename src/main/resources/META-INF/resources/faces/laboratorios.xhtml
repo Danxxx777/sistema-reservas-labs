@@ -1,0 +1,69 @@
+<ui:composition template="/faces/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core">
+
+    <ui:define name="contenido">
+
+        <h:form>
+
+            <h3>Gestión de Laboratorios</h3>
+
+            <h:panelGrid columns="2" cellpadding="5">
+
+                <h:outputLabel value="Nombre:"/>
+                <h:inputText value="#{laboratorioBean.laboratorio.nombre}" required="true"/>
+
+                <h:outputLabel value="Ubicación:"/>
+                <h:inputText value="#{laboratorioBean.laboratorio.ubicacion}" required="true"/>
+
+                <h:outputLabel value="Capacidad:"/>
+                <h:inputText value="#{laboratorioBean.laboratorio.capacidad}" required="true"/>
+
+            </h:panelGrid>
+
+            <br/>
+
+            <h:commandButton value="Guardar"
+                             action="#{laboratorioBean.guardar}"/>
+
+            <br/><br/>
+
+            <h:dataTable value="#{laboratorioBean.laboratorios}"
+                         var="l"
+                         border="1"
+                         cellpadding="5">
+
+                <h:column>
+                    <f:facet name="header">Nombre</f:facet>
+                    #{l.nombre}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Ubicación</f:facet>
+                    #{l.ubicacion}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Capacidad</f:facet>
+                    #{l.capacidad}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Estado</f:facet>
+                    #{l.estado}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Acciones</f:facet>
+                    <h:commandButton value="Eliminar"
+                                     action="#{laboratorioBean.eliminar(l.id)}"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

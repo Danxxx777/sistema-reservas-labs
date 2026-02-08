@@ -29,6 +29,11 @@ public class LaboratorioService {
         }
         return laboratorioRepository.save(laboratorio);
     }
+    public Laboratorio buscarPorId(Long id) {
+        return laboratorioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Laboratorio no encontrado"));
+    }
+
 
     public void eliminar(Long id) {
         laboratorioRepository.deleteById(id);

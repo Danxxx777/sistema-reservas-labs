@@ -1,0 +1,56 @@
+<ui:composition template="/faces/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets" xmlns:f="https://jakarta.ee/xml/ns/jakartaee">
+
+    <ui:define name="contenido">
+
+        <h2>Gestión de Usuarios</h2>
+
+        <!-- FORMULARIO -->
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5">
+
+                <h:outputLabel value="Nombres:" />
+                <h:inputText value="#{usuarioBean.usuario.nombres}" required="true"/>
+
+                <h:outputLabel value="Email:" />
+                <h:inputText value="#{usuarioBean.usuario.email}" required="true"/>
+
+                <h:outputLabel value="Rol:" />
+                <h:inputText value="#{usuarioBean.usuario.rol}" required="true"/>
+
+                <h:commandButton value="Guardar" action="#{usuarioBean.guardar}" />
+            </h:panelGrid>
+        </h:form>
+
+        <br/>
+
+        <!-- TABLA -->
+        <h:dataTable value="#{usuarioBean.usuarios}" var="u" border="1" cellpadding="5">
+
+            <h:column>
+                <f:facet name="header">Nombres</f:facet>
+                #{u.nombres}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                #{u.email}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Rol</f:facet>
+                #{u.rol}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton value="Eliminar"
+                                 action="#{usuarioBean.eliminar(u.id)}"/>
+            </h:column>
+
+        </h:dataTable>
+
+    </ui:define>
+</ui:composition>
